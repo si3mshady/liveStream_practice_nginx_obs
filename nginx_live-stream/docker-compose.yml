@@ -1,7 +1,8 @@
 version: "3.9"
 services:
   rtmp:
-    build: ./rtmp
+    # build: ./rtmp
+    image: si3mshady/rmtp
     ports:
       - "1935:1935"
       - "8080:8080"
@@ -10,5 +11,20 @@ services:
       - ./data:/tmp/hls
 
   auth:
-    build: ./auth
+    image: si3mshady/livestream_auth
+    # build: ./auth
     container_name: auth_live_server
+
+  streamshady_backend:
+    image: si3mshady/streamshady_be:v2
+    # build: ./server
+    ports:
+    - "4000:4000"
+    # container_name: videostream_backend
+
+  streamshady_frontend:
+    image: si3mshady/streamshady_fe:v2
+    # build: ./sav2
+    ports:
+    - "3000:3000"
+    # container_name: videostream_backend
