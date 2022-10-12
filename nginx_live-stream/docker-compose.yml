@@ -1,18 +1,20 @@
 version: "3.9"
 services:
   rtmp:
-    # build: ./rtmp
-    image: si3mshady/rmtp
+    build: ./rtmp
+      #image: si3mshady/rmtp:1
     ports:
       - "1935:1935"
       - "8080:8080"
     container_name: rtmp_live_server
     volumes:
       - ./data:/tmp/hls
+    environment:
+      - REACT_APP_IPV4=52.5.174.175
 
   auth:
-    image: si3mshady/livestream_auth
-    # build: ./auth
+    #image: si3mshady/livestream_auth:1
+    build: ./auth
     container_name: auth_live_server
 
   streamshady_backend:
@@ -21,10 +23,13 @@ services:
     ports:
     - "4000:4000"
     # container_name: videostream_backend
+    environment:
+      -  REACT_APP_IPV4=52.5.174.175
 
   streamshady_frontend:
     image: si3mshady/streamshady_fe:v2
     # build: ./sav2
     ports:
     - "3000:3000"
-    # container_name: videostream_backend
+    environment:
+      -  REACT_APP_IPV4=52.5.174.175
